@@ -30,14 +30,18 @@ def player(board):
         return X
     else:
         return O
-    
 
 
 def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    raise NotImplementedError
+    possible_actions = []
+    for i in board:
+        for j in i:
+            if board[i][j] == EMPTY:
+                possible_actions.append((i, j))
+    return set(possible_actions)
 
 
 def result(board, action):
