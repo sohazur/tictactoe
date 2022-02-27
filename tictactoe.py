@@ -160,5 +160,3 @@ def min_value(board):
         if v == -1:
             break
     return v
-
-
