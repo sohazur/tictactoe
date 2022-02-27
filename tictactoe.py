@@ -27,7 +27,7 @@ def player(board):
     if terminal(board):
         return None
     # Checking if the board is in initial state or number of X is less than/equal to O
-    elif board == initial_state() or sum(row.count(X) for row in board) <= sum(row.count(O) for row in board):
+    elif board == initial_state() or sum(row.count(X) for row in board) == sum(row.count(O) for row in board):
         return X
     else:
         return O
@@ -54,10 +54,10 @@ def result(board, action):
     Returns the board that results from making move (i, j) on the board.
     """
     # Checking for valid move
-    if (action in actions(board)) == False:
-        raise Exception("Invalid Move")
+    # if (action not in actions(board)):
+    #     raise Exception("Invalid Move")
     # Copying the board
-    copy_board = board[:]
+    copy_board = [row[:] for row in board]
     # Putting the player in the cell
     copy_board[action[0]][action[1]] = player(board)
     return copy_board
@@ -117,4 +117,48 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
+    if terminal(board):
+        return None
+    elif player(board) == X:
+        v = -1
+        for action in actions(board):
+            if min_value(result(board, action)) >= v:
+                v = min_value(result(board, action))
+                optimal_action = action
+    elif player(board) == O:
+        v = 1
+        for action in actions(board):
+            if max_value(result(board, action)) <= v:
+                v = max_value(result(board, action))
+                optimal_action = action
+    return optimal_action
+
+
+# function for max_value
+def max_value(board):
+    if terminal(board):
+        return utility(board)
+    v = float("-inf")
+    # optimal_action = None
+    for action in actions(board):
+        v = max(v, min_value(result(board, action)))
+        # Alpha-Beta Pruning
+        if v == 1:
+            break
+    return v
+
+
+# function for min_value
+def min_value(board):
+    if terminal(board):
+        return utility(board)
+    v = float("inf")
+    # optimal_action = None
+    for action in actions(board):
+        v = min(v, max_value(result(board, action)))
+        # Alpha-Beta Pruning
+        if v == -1:
+            break
+    return v
+
+
