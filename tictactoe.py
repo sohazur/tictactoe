@@ -66,14 +66,21 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
+    
 
 
 def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    raise NotImplementedError
+    # Checking if all the cells are filled
+    if sum(row.count(EMPTY) for row in board) == 0:
+        return True
+    # Checking if already a winner exists
+    elif winner(board) == X or winner(board) == O:
+        return True
+    else:
+        return False
 
 
 def utility(board):
