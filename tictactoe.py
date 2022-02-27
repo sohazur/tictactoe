@@ -36,12 +36,16 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    possible_actions = []
-    for i in board:
-        for j in i:
+    # Checking if the game is over
+    if terminal(board):
+        return None
+    possible_actions = set()
+    # Looking the Empty cells for possible actions
+    for i in range(len(board)):
+        for j in range(len(board[0])):
             if board[i][j] == EMPTY:
-                possible_actions.append((i, j))
-    return set(possible_actions)
+                possible_actions.add((i, j))
+    return possible_actions
 
 
 def result(board, action):
