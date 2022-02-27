@@ -66,7 +66,25 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    
+    # Checking rows
+    for row in board:
+        if len(set(row)) == 1:
+            if row[0] == X or row[0] == O:
+                return row[0]
+    # Checking columns
+    transpose_board = map(list, zip(*board))
+    for row in transpose_board:
+        if len(set(row)) == 1:
+            if row[0] == X or row[0] == O:
+                return row[0]
+    # Checking diagonals
+    if len(set([board[i][i] for i in range(len(board))])) == 1:
+        if board[0][0] == X or board[0][0] == O:
+            return board[0][0]
+    if len(set([board[i][len(board)-i-1] for i in range(len(board))])) == 1:
+        if board[0][len(board)-1] == X or board[0][len(board)-1] == O:
+            return board[0][len(board)-1]
+    return None
 
 
 def terminal(board):
