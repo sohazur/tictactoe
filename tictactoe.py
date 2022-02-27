@@ -22,7 +22,15 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    raise NotImplementedError
+    # Checking if the game is over
+    if terminal(board):
+        return None
+    # Checking if the board is in initial state or number of X is less than/equal to O
+    elif board == initial_state() or sum(row.count(X) for row in board) <= sum(row.count(O) for row in board):
+        return X
+    else:
+        return O
+    
 
 
 def actions(board):
@@ -57,7 +65,12 @@ def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    raise NotImplementedError
+    if winner(board) == X:
+        return 1
+    elif winner(board) == O:
+        return -1
+    else:
+        return 0
 
 
 def minimax(board):
